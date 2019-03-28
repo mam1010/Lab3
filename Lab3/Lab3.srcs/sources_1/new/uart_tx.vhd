@@ -42,9 +42,8 @@ entity uart_tx is
 end uart_tx;
 
 architecture Behavioral of uart_tx is
-    signal reg : std_logic_vector(7 downto 0);
-    signal counter : std_logic_vector(2 downto 0);
-    signal transmit : std_logic;
+    signal reg : std_logic_vector(7 downto 0) := (others => '0');
+    signal counter : std_logic_vector(3 downto 0) := (others => '0');
 begin
     process(clk)
     begin
@@ -53,21 +52,19 @@ begin
                 ready <= '1';
                 tx <= '1';
                 reg <= "00000000";
-                transmit <= '0';
             else
                 if(send='1' and en='1') then
                     reg <= char;
                     ready <= '0';
-                    counter <= "111";
-                    transmit <= '1';
+                    counter <= "0000";
                     tx <= '0';
                 elsif(send='0' and en='1') then
-                    if(transmit='1') then
+                    if(unsigned(counter) < 8) then
                         tx <= reg(to_integer(unsigned(counter)));
-                        counter <= std_logic_vector(unsigned(counter) - 1);
+                        counter <= std_logic_vector(unsigned(counter) + 1);
                     else
+                        ready <= '1';
                         tx <= '1';
-                        transmit <= '0';
                     end if;
                 end if;
             end if;

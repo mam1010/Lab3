@@ -33,7 +33,8 @@ use IEEE.NUMERIC_STD.all;
 --use UNISIM.VComponents.all;
 
 entity debounce is
-    Port ( btn : in STD_LOGIC;
+    Port ( 
+            btn : in STD_LOGIC;
            clk : in STD_LOGIC;
            dbnc : out STD_LOGIC);
 end debounce;
