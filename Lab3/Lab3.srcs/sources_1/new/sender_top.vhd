@@ -81,6 +81,7 @@ architecture Structural of sender_top is
     signal charac : std_logic_vector(7 downto 0);
     signal snd : std_logic; 
     signal rdy : std_logic;
+    signal garbo : std_logic_vector(8 downto 0);
 begin
     u1: debounce port map(
         btn => btn(0),
@@ -114,9 +115,9 @@ begin
         charSend => charac,
         ready => rdy,
         tx => RXD,
-        newChar => rdy,
-        charRec => charac);
-        
+        newChar => garbo(8),
+        charRec => garbo(7 downto 0));
+     garbo <= "000000000";
      CTS <= '0';
      RTS <= '0';
 end Structural;

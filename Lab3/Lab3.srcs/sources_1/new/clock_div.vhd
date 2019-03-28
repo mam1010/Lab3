@@ -43,13 +43,13 @@ begin
     process (CLK_IN)
     begin 
         if(rising_edge(CLK_IN)) then
-            if (unsigned(counter) < 62499999) then
+            if (unsigned(counter) < 1084) then
                counter <= std_logic_vector(unsigned(counter) + 1);
             else
                counter <= (others => '0');
             end if;
         end if;
-        if (unsigned(counter) = 31250000) then
+        if (unsigned(counter) < 542) then
             CLK_OUT <= '1';            
         else
             CLK_OUT <= '0';              
